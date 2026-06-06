@@ -18,10 +18,10 @@ export default function Home() {
         <Hero />
         <TrustSection />
         <AboutSection />
+        <GallerySection />
         <CoursesSection />
         <BenefitsSection />
         <ReviewsSection />
-        <GallerySection />
         <ContactSection />
       </main>
       <Footer />
