@@ -43,18 +43,17 @@ export default function Navbar() {
         aria-label="Main Navigation"
       >
         {/* Logo */}
-        <Link
-          href="#home"
-          className="flex items-center space-x-2 text-white group"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <span className="font-extrabold text-2xl tracking-wider text-accent group-hover:text-white transition-colors duration-200">
-            ENGLISH
-          </span>
-          <span className="font-extrabold text-2xl tracking-wider text-blue-700 group-hover:text-white transition-colors duration-200">
-            GUIDE
-          </span>
-        </Link>
+        <div className="bg-white/85 backdrop-blur-md rounded-[16px] px-3 py-1 inline-block shadow-sm ">
+          <Link href="#home" className="flex items-center space-x-2 group" onClick={() => setIsMobileMenuOpen(false)} >
+            <span className="font-extrabold text-2xl tracking-wider text-accent group-hover:text-blue-700 transition-colors duration-200">
+              ENGLISH
+            </span>
+            <span className="font-extrabold text-2xl tracking-wider text-blue-700 group-hover:text-accent transition-colors duration-200">
+              GUIDE
+            </span>
+          </Link>
+        </div>
+
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
