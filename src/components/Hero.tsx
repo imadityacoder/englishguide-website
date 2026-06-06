@@ -62,14 +62,14 @@ export default function Hero() {
             {/* Trust Badges */}
             <motion.div
               variants={itemVariants}
-              className="inline-flex flex-wrap items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 text-xs sm:text-sm"
+              className="inline-flex flex-wrap items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-2 rounded-full border border-white/10 text-xs sm:text-sm"
             >
               <span className="flex items-center text-accent font-bold gap-1">
                 <Star className="w-4 h-4 fill-accent stroke-accent" />
-                4.8/5 Rating
+                4.8+ Rating
               </span>
               <span className="w-1.5 h-1.5 bg-white/40 rounded-full" />
-              <span className="font-medium">557+ Google Reviews</span>
+              <span className="font-medium">557+ Reviews</span>
               <span className="w-1.5 h-1.5 bg-white/40 rounded-full" />
               <span className="text-accent font-medium">Daily Classes</span>
             </motion.div>
