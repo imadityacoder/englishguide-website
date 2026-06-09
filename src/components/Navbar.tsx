@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -43,16 +44,27 @@ export default function Navbar() {
         aria-label="Main Navigation"
       >
         {/* Logo */}
-        <div className="bg-white/85 backdrop-blur-md rounded-[16px] px-3 py-1 inline-block shadow-sm ">
-          <Link href="#home" className="flex items-center space-x-2 group" onClick={() => setIsMobileMenuOpen(false)} >
+        <Link
+          href="#home"
+          className="flex items-center space-x-2 bg-white/85 backdrop-blur-md rounded-[32px] p-2 shadow-sm transition-all duration-300 group"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <Image
+            src="/logo.svg"
+            alt="English Guide Logo"
+            width={40}
+            height={40}
+            className="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-200"
+          />
+          <div className="flex items-center px-1">
             <span className="font-extrabold text-2xl tracking-wider text-accent group-hover:text-blue-700 transition-colors duration-200">
               ENGLISH
             </span>
-            <span className="font-extrabold text-2xl tracking-wider text-blue-700 group-hover:text-accent transition-colors duration-200">
+            <span className="font-extrabold text-2xl tracking-wider text-blue-700 group-hover:text-accent transition-colors duration-200 ml-1">
               GUIDE
             </span>
-          </Link>
-        </div>
+          </div>
+        </Link>
 
 
         {/* Desktop Navigation */}

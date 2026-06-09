@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "English Guide | Best Spoken English Coaching in Patna",
     description: "Improve spoken English, grammar, confidence, personality development, and interview skills with English Guide in Patna.",
-    url: "https://englishguidepatna.com",
+    url: "https://englishguidepatna.in",
     siteName: "English Guide",
     images: [
       {
@@ -38,6 +38,10 @@ export const metadata: Metadata = {
     ],
     locale: "en_IN",
     type: "website",
+  },
+  icons: {
+    icon: "/logo.svg",
+    apple: "/logo.svg",
   },
   robots: {
     index: true,
