@@ -51,22 +51,54 @@ export default function ContactSection() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({
-        name: "",
-        phone: "",
-        course: "Spoken English",
-        message: "",
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "",
+          subject: "New Admission Inquiry",
+          from_name: "English Guide Website",
+          name: formData.name,
+          phone: formData.phone,
+          course: formData.course,
+          message: formData.message,
+        }),
       });
-    }, 1200);
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSubmitted(true);
+        setFormData({
+          name: "",
+          phone: "",
+          course: "Spoken English",
+          message: "",
+        });
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          submit: data.message || "Something went wrong. Please try again.",
+        }));
+      }
+    } catch {
+      setErrors((prev) => ({
+        ...prev,
+        submit: "Failed to submit. Please check your network connection and try again.",
+      }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -289,6 +321,12 @@ export default function ContactSection() {
                       </p>
                     )}
                   </div>
+
+                  {errors.submit && (
+                    <p className="text-sm font-semibold text-primary text-center">
+                      {errors.submit}
+                    </p>
+                  )}
 
                   {/* Submit Button */}
                   <button
