@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star, Phone, ArrowRight, MessageSquare, GraduationCap, Award } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 export default function Hero() {
   const containerVariants = {
@@ -97,6 +98,7 @@ export default function Hero() {
             >
               <a
                 href="#contact"
+                onClick={() => trackEvent("hero_demo_class_click", { event_category: "CTA", event_label: "Hero Section" })}
                 className="inline-flex items-center justify-center px-8 py-4 bg-accent hover:bg-white text-primary hover:text-primary font-bold text-base rounded-full shadow-lg hover:shadow-xl transition-all duration-300 min-h-[48px] group"
               >
                 Book Free Demo Class
@@ -104,6 +106,7 @@ export default function Hero() {
               </a>
               <a
                 href="tel:+917903229506"
+                onClick={() => trackEvent("call_now_click", { event_category: "CTA", event_label: "Hero Section" })}
                 className="inline-flex items-center justify-center px-8 py-4 bg-transparent hover:bg-white/10 text-white font-bold text-base rounded-full border-2 border-white/80 hover:border-white transition-all duration-300 min-h-[48px]"
               >
                 <Phone className="w-5 h-5 mr-2" />

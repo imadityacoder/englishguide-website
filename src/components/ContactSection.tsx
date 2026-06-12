@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Clock, Send, CheckCircle } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function ContactSection() {
     message: "",
   });
 
+  const [website, setWebsite] = useState(""); // Honeypot field to trap bots
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -58,44 +60,56 @@ export default function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/inquiry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "",
-          subject: "New Admission Inquiry",
-          from_name: "English Guide Website",
           name: formData.name,
           phone: formData.phone,
           course: formData.course,
           message: formData.message,
+          website: website, // Send honeypot field
         }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok && data.success) {
         setIsSubmitted(true);
+        // Track Conversion Event
+        trackEvent("form_submission_success", {
+          event_category: "Lead Generation",
+          event_label: formData.course,
+        });
+
         setFormData({
           name: "",
           phone: "",
           course: "Spoken English",
           message: "",
         });
+        setWebsite("");
       } else {
         setErrors((prev) => ({
           ...prev,
           submit: data.message || "Something went wrong. Please try again.",
         }));
+        trackEvent("form_submission_failed", {
+          event_category: "Lead Generation",
+          error_message: data.message || "Unknown error",
+        });
       }
     } catch {
       setErrors((prev) => ({
         ...prev,
         submit: "Failed to submit. Please check your network connection and try again.",
       }));
+      trackEvent("form_submission_error", {
+        event_category: "Lead Generation",
+        error_message: "Network exception",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -223,6 +237,18 @@ export default function ContactSection() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Honeypot field to trap bots */}
+                  <div className="hidden" aria-hidden="true">
+                    <input
+                      type="text"
+                      name="website"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   {/* Name field */}
                   <div className="space-y-2">
                     <label htmlFor="name-input" className="block text-sm font-bold text-brand-text/80">

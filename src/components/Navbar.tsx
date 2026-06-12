@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackEvent } from "@/lib/analytics";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -50,7 +51,7 @@ export default function Navbar() {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="English Guide Logo"
             width={40}
             height={40}
@@ -84,6 +85,7 @@ export default function Navbar() {
         <div className="hidden md:block">
           <a
             href="tel:+917903229506"
+            onClick={() => trackEvent("call_now_click", { event_category: "CTA", event_label: "Header Desktop" })}
             className="inline-flex items-center justify-center px-6 py-2.5 bg-accent hover:bg-white text-primary hover:text-primary font-bold text-sm rounded-full shadow-md hover:shadow-xl transition-all duration-300 min-h-[48px]"
           >
             <Phone className="w-4 h-4 mr-2" />
@@ -129,7 +131,10 @@ export default function Navbar() {
               <div className="pt-4">
                 <a
                   href="tel:+917903229506"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackEvent("call_now_click", { event_category: "CTA", event_label: "Header Mobile" });
+                  }}
                   className="w-full inline-flex items-center justify-center px-6 py-3 bg-accent text-primary font-bold text-base rounded-full shadow-md min-h-[48px]"
                 >
                   <Phone className="w-5 h-5 mr-2" />

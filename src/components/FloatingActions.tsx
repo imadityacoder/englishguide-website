@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, Calendar } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 export default function FloatingActions() {
   const [isVisible, setIsVisible] = useState(false);
@@ -67,6 +68,7 @@ export default function FloatingActions() {
             transition={{ duration: 0.3 }}
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => trackEvent("floating_class_book_click", { event_category: "CTA", event_label: "Floating Actions Left" })}
             className="fixed bottom-6 left-6 z-40 inline-flex items-center gap-2.5 px-5 py-3.5 bg-primary hover:bg-primary/95 text-white font-extrabold text-sm sm:text-base rounded-full shadow-lg hover:shadow-xl transition-all duration-300 min-h-[48px] cursor-pointer border border-white/10"
             aria-label="Book a free class"
           >
@@ -85,6 +87,7 @@ export default function FloatingActions() {
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => trackEvent("whatsapp_click", { event_category: "CTA", event_label: "Floating Actions Right" })}
           className="w-14 h-14 bg-[#25D366] hover:bg-[#20ba56] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[48px] group cursor-pointer"
           aria-label="Contact us on WhatsApp"
         >
@@ -96,6 +99,7 @@ export default function FloatingActions() {
           href="tel:+917903229506"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => trackEvent("call_now_click", { event_category: "CTA", event_label: "Floating Actions Right" })}
           className="w-14 h-14 bg-accent hover:bg-[#c29112] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[48px] group cursor-pointer"
           aria-label="Call English Guide"
         >
